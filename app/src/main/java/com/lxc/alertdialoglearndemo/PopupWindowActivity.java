@@ -2,7 +2,9 @@ package com.lxc.alertdialoglearndemo;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.Fade;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -44,8 +46,12 @@ public class PopupWindowActivity extends AppCompatActivity {
         popupWindow = new PopupWindow(view, WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,true);
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popupWindow.setAnimationStyle(R.style.PopupWindow_Style);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+//        popupWindow.setAnimationStyle(R.style.PopupWindow_Style);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // 使用 Transition 替代传统动画
+            popupWindow.setEnterTransition(new Fade());
+            popupWindow.setExitTransition(new Fade());
+        }
         popupWindow.showAsDropDown(btnShow);
     }
 
